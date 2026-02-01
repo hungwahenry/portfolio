@@ -61,7 +61,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-lg md:text-xl text-muted-foreground max-w-xl border-l-2 border-foreground/20 pl-4"
+              className="text-lg md:text-xl text-muted-foreground"
             >
               {profile.tagline}
             </motion.p>
