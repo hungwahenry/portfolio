@@ -6,6 +6,14 @@ import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
 
 const projects = [
   {
+    title: "Qinter",
+    description:
+      "A Python developer tool that transforms cryptic error messages into clear, actionable explanations with suggested fixes and examples. Makes debugging faster and more intuitive.",
+    tags: ["Python", "CLI", "Developer Tools", "DX"],
+    github: "https://github.com/hungwahenry/qinter",
+    featured: true,
+  },
+  {
     title: "Cheevo",
     description:
       "A pseudo-anonymous social platform designed for campus and university communities. Built with modern web technologies for real-time interactions and community engagement.",
@@ -30,6 +38,14 @@ const projects = [
     tags: ["Python", "AI", "Eleven Labs", "Audio"],
     github: "https://github.com/hungwahenry/voicegenie",
     featured: true,
+  },
+  {
+    title: "MemeVault",
+    description:
+      "A meme collection and sharing platform. Browse, save, and share your favorite memes with a clean and intuitive interface.",
+    tags: ["JavaScript", "Web App", "Entertainment"],
+    github: "https://github.com/hungwahenry/memevault",
+    featured: false,
   },
   {
     title: "AA Scraper",
