@@ -1,0 +1,20 @@
+{
+  "name": "Henry Hungwa",
+  "shortName": "henry",
+  "title": "Full-Stack Developer",
+  "tagline": "I build web apps, mobile apps, telegram bots, and AI automations with clean code and thoughtful design.",
+  "location": "Nigeria",
+  "status": "Available for work",
+  "bio": "I'm a developer who enjoys turning complex problems into simple, elegant solutions. With expertise spanning multiple languages and frameworks, I build everything from web applications to AI-powered tools.",
+  "bioExtended": "When I'm not coding, you'll find me exploring new technologies, contributing to open source, or helping other developers level up their skills.",
+  "stats": [
+    { "value": "26+", "label": "Projects Completed" },
+    { "value": "4+", "label": "Languages Mastered" },
+    { "value": "3+", "label": "Years Experience" }
+  ],
+  "social": {
+    "github": "https://github.com/hungwahenry",
+    "website": "https://henter.dev",
+    "email": "hey@henter.dev"
+  }
+}

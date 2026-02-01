@@ -3,25 +3,29 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mail, Github, Globe, ArrowUpRight } from "lucide-react";
+import profile from "@/data/profile.json";
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Email: Mail,
+  GitHub: Github,
+  Website: Globe,
+};
 
 const contacts = [
   {
     label: "Email",
-    value: "hey@henter.dev",
-    href: "mailto:hey@henter.dev",
-    icon: Mail,
+    value: profile.social.email,
+    href: `mailto:${profile.social.email}`,
   },
   {
     label: "GitHub",
     value: "@hungwahenry",
-    href: "https://github.com/hungwahenry",
-    icon: Github,
+    href: profile.social.github,
   },
   {
     label: "Website",
     value: "henter.dev",
-    href: "https://henter.dev",
-    icon: Globe,
+    href: profile.social.website,
   },
 ];
 
@@ -63,30 +67,33 @@ export function Contact() {
 
           {/* Contact links */}
           <div className="grid md:grid-cols-3 gap-6">
-            {contacts.map((contact, index) => (
-              <motion.a
-                key={contact.label}
-                href={contact.href}
-                target={contact.href.startsWith("mailto") ? undefined : "_blank"}
-                rel={contact.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="group p-8 bg-card border border-border rounded-2xl hover:border-foreground/20 transition-all duration-300"
-                whileHover={{ y: -4 }}
-              >
-                <div className="flex items-start justify-between mb-6">
-                  <contact.icon className="w-8 h-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                  <ArrowUpRight className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">{contact.label}</p>
-                  <p className="text-lg font-medium group-hover:text-foreground transition-colors">
-                    {contact.value}
-                  </p>
-                </div>
-              </motion.a>
-            ))}
+            {contacts.map((contact, index) => {
+              const Icon = iconMap[contact.label] || Mail;
+              return (
+                <motion.a
+                  key={contact.label}
+                  href={contact.href}
+                  target={contact.href.startsWith("mailto") ? undefined : "_blank"}
+                  rel={contact.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                  className="group p-8 bg-card border border-border rounded-2xl hover:border-foreground/20 transition-all duration-300"
+                  whileHover={{ y: -4 }}
+                >
+                  <div className="flex items-start justify-between mb-6">
+                    <Icon className="w-8 h-8 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <ArrowUpRight className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">{contact.label}</p>
+                    <p className="text-lg font-medium group-hover:text-foreground transition-colors">
+                      {contact.value}
+                    </p>
+                  </div>
+                </motion.a>
+              );
+            })}
           </div>
 
           {/* CTA */}
@@ -100,7 +107,7 @@ export function Contact() {
               Prefer a direct conversation?
             </p>
             <motion.a
-              href="mailto:hey@henter.dev"
+              href={`mailto:${profile.social.email}`}
               className="inline-flex items-center gap-2 px-8 py-4 bg-foreground text-background rounded-full font-medium text-lg hover:opacity-90 transition-opacity"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

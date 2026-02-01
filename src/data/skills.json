@@ -1,0 +1,42 @@
+{
+  "services": [
+    {
+      "title": "Web Development",
+      "description": "Modern, responsive web applications built with React, Next.js, and other cutting-edge frameworks."
+    },
+    {
+      "title": "Mobile Apps",
+      "description": "Cross-platform mobile applications using Flutter and React Native for iOS and Android."
+    },
+    {
+      "title": "Telegram Bots",
+      "description": "Custom Telegram bots with aiogram and Telegraf for automation and user engagement."
+    },
+    {
+      "title": "AI Automations",
+      "description": "Intelligent automation solutions leveraging AI APIs and machine learning integrations."
+    },
+    {
+      "title": "Backend Systems",
+      "description": "Scalable APIs and server infrastructure with Python, PHP, and modern databases."
+    },
+    {
+      "title": "Full-Stack Solutions",
+      "description": "End-to-end development from concept to deployment with clean, maintainable code."
+    }
+  ],
+  "technologies": [
+    "Python",
+    "TypeScript",
+    "Rust",
+    "PHP",
+    "React",
+    "Next.js",
+    "Flutter",
+    "React Native",
+    "Node.js",
+    "PostgreSQL",
+    "Tailwind CSS",
+    "Docker"
+  ]
+}

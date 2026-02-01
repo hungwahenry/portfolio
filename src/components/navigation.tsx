@@ -4,13 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
+import navItems from "@/data/navigation.json";
+import profile from "@/data/profile.json";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,7 +39,7 @@ export function Navigation() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            henry<span className="text-muted">.</span>
+            {profile.shortName}<span className="text-muted">.</span>
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -70,7 +65,7 @@ export function Navigation() {
               transition={{ delay: 0.4, duration: 0.5 }}
             >
               <a
-                href="https://github.com/hungwahenry"
+                href={profile.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm px-4 py-2 bg-foreground text-background rounded-full hover:opacity-90 transition-opacity"
@@ -125,7 +120,7 @@ export function Navigation() {
                   transition={{ delay: 0.4 }}
                 >
                   <a
-                    href="https://github.com/hungwahenry"
+                    href={profile.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block text-lg px-6 py-3 bg-foreground text-background rounded-full"

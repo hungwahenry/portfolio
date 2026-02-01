@@ -10,72 +10,16 @@ import {
   Database,
   Globe,
 } from "lucide-react";
+import skillsData from "@/data/skills.json";
 
-const skills = [
-  {
-    category: "Languages",
-    items: ["Python", "TypeScript", "Rust", "PHP", "JavaScript", "Dart"],
-  },
-  {
-    category: "Frontend",
-    items: ["React", "Next.js", "Vue.js", "Tailwind CSS", "Framer Motion"],
-  },
-  {
-    category: "Backend",
-    items: ["Node.js", "FastAPI", "Laravel", "Express", "Django"],
-  },
-  {
-    category: "Mobile",
-    items: ["Flutter", "React Native", "Expo"],
-  },
-  {
-    category: "Databases",
-    items: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "SQLite"],
-  },
-  {
-    category: "Tools",
-    items: ["Git", "Docker", "Linux", "AWS", "Vercel"],
-  },
-];
-
-const services = [
-  {
-    icon: Globe,
-    title: "Web Development",
-    description:
-      "Modern, responsive web applications built with React, Next.js, and other cutting-edge technologies.",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile Apps",
-    description:
-      "Cross-platform mobile applications using Flutter and React Native for iOS and Android.",
-  },
-  {
-    icon: Bot,
-    title: "Telegram Bots",
-    description:
-      "Custom Telegram bots with aiogram and Telegraf for automation, notifications, and user engagement.",
-  },
-  {
-    icon: Sparkles,
-    title: "AI Automations",
-    description:
-      "Intelligent automation systems leveraging AI APIs to streamline workflows and processes.",
-  },
-  {
-    icon: Database,
-    title: "Backend Systems",
-    description:
-      "Scalable backend architectures with APIs, databases, and cloud infrastructure.",
-  },
-  {
-    icon: Code2,
-    title: "Full-Stack Solutions",
-    description:
-      "End-to-end development from concept to deployment with ongoing maintenance.",
-  },
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  "Web Development": Globe,
+  "Mobile Apps": Smartphone,
+  "Telegram Bots": Bot,
+  "AI Automations": Sparkles,
+  "Backend Systems": Database,
+  "Full-Stack Solutions": Code2,
+};
 
 export function Skills() {
   const ref = useRef(null);
@@ -110,21 +54,24 @@ export function Skills() {
 
           {/* Services grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
-                className="group p-6 bg-card border border-border rounded-2xl hover:border-foreground/20 transition-colors"
-              >
-                <service.icon className="w-10 h-10 mb-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {service.description}
-                </p>
-              </motion.div>
-            ))}
+            {skillsData.services.map((service, index) => {
+              const Icon = iconMap[service.title] || Code2;
+              return (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
+                  className="group p-6 bg-card border border-border rounded-2xl hover:border-foreground/20 transition-colors"
+                >
+                  <Icon className="w-10 h-10 mb-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Tech stack */}
@@ -135,28 +82,14 @@ export function Skills() {
             className="space-y-8"
           >
             <h3 className="text-xl font-semibold">Tech Stack</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {skills.map((skillGroup, groupIndex) => (
-                <motion.div
-                  key={skillGroup.category}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.5 + groupIndex * 0.1 }}
+            <div className="flex flex-wrap gap-2">
+              {skillsData.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-4 py-2 text-sm bg-background border border-border rounded-full hover:border-foreground/30 transition-colors"
                 >
-                  <h4 className="text-sm font-mono text-muted-foreground uppercase tracking-wider mb-3">
-                    {skillGroup.category}
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 text-sm bg-background border border-border rounded-full hover:border-foreground/30 transition-colors"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
+                  {tech}
+                </span>
               ))}
             </div>
           </motion.div>

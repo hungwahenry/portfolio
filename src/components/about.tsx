@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import profile from "@/data/profile.json";
 
 export function About() {
   const ref = useRef(null);
@@ -40,22 +41,8 @@ export function About() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-6 text-muted-foreground text-lg leading-relaxed"
             >
-              <p>
-                I&apos;m a full-stack developer with a passion for creating efficient,
-                scalable solutions. My expertise spans across web development, mobile
-                applications, and automation systems.
-              </p>
-              <p>
-                With experience in Python, TypeScript, Rust, and PHP, I build everything
-                from high-performance web applications to intelligent Telegram bots and
-                AI-powered automations. I believe in writing clean, maintainable code
-                that stands the test of time.
-              </p>
-              <p>
-                When I&apos;m not coding, I&apos;m exploring new technologies, contributing to
-                open-source projects, and finding innovative ways to solve everyday problems
-                through technology.
-              </p>
+              <p>{profile.bio}</p>
+              <p>{profile.bioExtended}</p>
             </motion.div>
 
             {/* Stats */}
@@ -65,11 +52,7 @@ export function About() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="grid grid-cols-3 gap-8 pt-8 border-t border-border"
             >
-              {[
-                { value: "26+", label: "Projects" },
-                { value: "4+", label: "Languages" },
-                { value: "3+", label: "Years Exp." },
-              ].map((stat, index) => (
+              {profile.stats.map((stat, index) => (
                 <div key={index}>
                   <div className="text-3xl font-bold">{stat.value}</div>
                   <div className="text-sm text-muted-foreground mt-1">

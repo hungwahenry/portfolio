@@ -3,81 +3,24 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import projectsData from "@/data/projects.json";
+import profile from "@/data/profile.json";
 
-const projects = [
-  {
-    title: "Qinter",
-    description:
-      "A Python developer tool that transforms cryptic error messages into clear, actionable explanations with suggested fixes and examples. Makes debugging faster and more intuitive.",
-    tags: ["Python", "CLI", "Developer Tools", "DX"],
-    github: "https://github.com/hungwahenry/qinter",
-    featured: true,
-  },
-  {
-    title: "Cheevo",
-    description:
-      "A pseudo-anonymous social platform designed for campus and university communities. Built with modern web technologies for real-time interactions and community engagement.",
-    tags: ["TypeScript", "Next.js", "Real-time", "Social"],
-    github: "https://github.com/hungwahenry/cheevo",
-    live: "https://cheevonext.vercel.app",
-    featured: true,
-  },
-  {
-    title: "Creeb",
-    description:
-      "A modern web application featuring a sleek landing page and interactive user experience. Demonstrates clean design principles and smooth animations.",
-    tags: ["TypeScript", "React", "Tailwind CSS"],
-    github: "https://github.com/hungwahenry/creeb",
-    live: "https://creeb.vercel.app",
-    featured: true,
-  },
-  {
-    title: "VoiceGenie",
-    description:
-      "AI-powered voice changer leveraging Eleven Labs API for realistic voice synthesis and transformation. Perfect for content creators and voice-over work.",
-    tags: ["Python", "AI", "Eleven Labs", "Audio"],
-    github: "https://github.com/hungwahenry/voicegenie",
-    featured: true,
-  },
-  {
-    title: "MemeVault",
-    description:
-      "A meme collection and sharing platform. Browse, save, and share your favorite memes with a clean and intuitive interface.",
-    tags: ["JavaScript", "Web App", "Entertainment"],
-    github: "https://github.com/hungwahenry/memevault",
-    featured: false,
-  },
-  {
-    title: "AA Scraper",
-    description:
-      "A specialized scraper for American Airlines that calculates flight prices and miles. Useful for travelers looking to optimize their bookings and rewards.",
-    tags: ["Python", "Web Scraping", "Data Analysis"],
-    github: "https://github.com/hungwahenry/aascraper",
-    featured: false,
-  },
-  {
-    title: "Telegram Group API",
-    description:
-      "A Python API wrapper for seamless Telegram group interactions. Simplifies bot development and group management automation.",
-    tags: ["Python", "Telegram", "API", "Automation"],
-    github: "https://github.com/hungwahenry/telegram-group-api",
-    featured: false,
-  },
-  {
-    title: "Termux Ubuntu",
-    description:
-      "Shell script enabling Ubuntu terminal on Android via Termux without requiring root access. Makes Linux development accessible on mobile devices.",
-    tags: ["Shell", "Linux", "Android", "DevOps"],
-    github: "https://github.com/hungwahenry/termuxubuntu",
-    featured: false,
-    stars: 9,
-  },
-];
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  github: string;
+  live?: string;
+  featured: boolean;
+  stars?: number;
+}
 
 export function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  const projects = projectsData as Project[];
   const featuredProjects = projects.filter((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
 
@@ -243,7 +186,7 @@ export function Projects() {
             className="text-center mt-12"
           >
             <a
-              href="https://github.com/hungwahenry?tab=repositories"
+              href={`${profile.social.github}?tab=repositories`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"

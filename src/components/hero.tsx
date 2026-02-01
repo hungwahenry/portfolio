@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Mail, MapPin } from "lucide-react";
+import profile from "@/data/profile.json";
 
 export function Hero() {
   return (
@@ -30,7 +31,7 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
             </span>
-            Available for work
+            {profile.status}
           </motion.div>
 
           {/* Main heading */}
@@ -41,7 +42,7 @@ export function Hero() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight"
             >
-              Henry Hungwa
+              {profile.name}
             </motion.h1>
 
             <motion.p
@@ -50,10 +51,7 @@ export function Hero() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-2xl"
             >
-              Full-stack developer crafting{" "}
-              <span className="text-foreground">web apps</span>,{" "}
-              <span className="text-foreground">mobile experiences</span>, and{" "}
-              <span className="text-foreground">intelligent automations</span>.
+              {profile.tagline}
             </motion.p>
           </div>
 
@@ -65,7 +63,7 @@ export function Hero() {
             className="flex items-center gap-2 text-muted-foreground"
           >
             <MapPin size={16} />
-            <span>Nigeria</span>
+            <span>{profile.location}</span>
           </motion.div>
 
           {/* CTA buttons */}
@@ -86,7 +84,7 @@ export function Hero() {
             </motion.a>
 
             <motion.a
-              href="https://github.com/hungwahenry"
+              href={profile.social.github}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-full font-medium hover:bg-accent transition-colors"
