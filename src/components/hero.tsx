@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Mail, MapPin } from "lucide-react";
+import Image from "next/image";
 import profile from "@/data/profile.json";
 
 export function Hero() {
@@ -36,14 +37,25 @@ export function Hero() {
 
           {/* Main heading */}
           <div className="space-y-4">
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight"
+              className="flex items-center gap-4 md:gap-6"
             >
-              {profile.name}
-            </motion.h1>
+              <div className="relative w-14 h-14 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 border-border shrink-0">
+                <Image
+                  src={profile.avatar}
+                  alt={profile.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight">
+                {profile.name}
+              </h1>
+            </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
