@@ -1,11 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown, Github, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import profile from "@/data/profile.json";
 
+const roles = ["web apps", "mobile apps", "telegram bots", "AI tools"];
+
 export function Hero() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="min-h-screen flex flex-col justify-center relative overflow-hidden">
       {/* Background grid */}
@@ -57,14 +69,29 @@ export function Hero() {
               </h1>
             </motion.div>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-2xl"
+              className="text-xl md:text-2xl lg:text-3xl max-w-2xl"
             >
-              {profile.tagline}
-            </motion.p>
+              <span className="text-muted-foreground">I build </span>
+              <span className="relative inline-block w-[180px] md:w-[220px] lg:w-[260px] h-[1.2em] overflow-hidden align-bottom">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={roleIndex}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -40, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="absolute left-0 font-semibold text-foreground"
+                  >
+                    {roles[roleIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              <span className="text-muted-foreground"> that people actually use.</span>
+            </motion.div>
           </div>
 
           {/* Location */}
