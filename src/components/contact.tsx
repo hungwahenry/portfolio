@@ -7,8 +7,8 @@ import { Mail, Github, Globe, ArrowUpRight } from "lucide-react";
 const contacts = [
   {
     label: "Email",
-    value: "hello@henter.dev",
-    href: "mailto:hello@henter.dev",
+    value: "hey@henter.dev",
+    href: "mailto:hey@henter.dev",
     icon: Mail,
   },
   {
@@ -100,7 +100,7 @@ export function Contact() {
               Prefer a direct conversation?
             </p>
             <motion.a
-              href="mailto:hello@henter.dev"
+              href="mailto:hey@henter.dev"
               className="inline-flex items-center gap-2 px-8 py-4 bg-foreground text-background rounded-full font-medium text-lg hover:opacity-90 transition-opacity"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
