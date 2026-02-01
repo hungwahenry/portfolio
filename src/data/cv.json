@@ -1,0 +1,54 @@
+{
+  "summary": "Self-driven full-stack developer with 3+ years of experience building web applications, mobile apps, Telegram bots, and AI-powered tools. Passionate about creating products that solve real problems. Currently pursuing a degree in Cybersecurity while actively developing startup projects.",
+  "education": [
+    {
+      "degree": "Bachelor's Degree in Cybersecurity",
+      "institution": "Miva University",
+      "status": "In Progress",
+      "description": "Focused on network security, ethical hacking, and secure software development."
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Cybersecurity Essentials",
+      "issuer": "Cisco Networking Academy"
+    },
+    {
+      "name": "Networking Essentials",
+      "issuer": "Cisco Networking Academy"
+    },
+    {
+      "name": "IoT Fundamentals",
+      "issuer": "Cisco Networking Academy"
+    }
+  ],
+  "skills": {
+    "languages": ["Python", "TypeScript", "JavaScript", "Rust", "PHP", "Dart"],
+    "frontend": ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
+    "backend": ["Node.js", "FastAPI", "Laravel", "Express"],
+    "mobile": ["Flutter", "React Native"],
+    "databases": ["PostgreSQL", "MongoDB", "Redis", "MySQL"],
+    "tools": ["Git", "Docker", "Linux", "AWS", "Vercel"],
+    "other": ["Telegram Bot Development", "AI/ML Integration", "Web Scraping"]
+  },
+  "languages": [
+    { "language": "English", "proficiency": "Highly Proficient" }
+  ],
+  "interests": [
+    "Open Source Development",
+    "Cybersecurity",
+    "AI & Automation",
+    "Startup Building"
+  ],
+  "workPreferences": {
+    "remote": true,
+    "hybrid": true,
+    "onsite": false,
+    "traits": [
+      "Team player with strong collaboration skills",
+      "Thrives under pressure and tight deadlines",
+      "Self-motivated and proactive learner",
+      "Strong problem-solving abilities"
+    ]
+  }
+}
