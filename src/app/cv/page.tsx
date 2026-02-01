@@ -10,6 +10,7 @@ import {
   Code2,
   Languages,
   Heart,
+  Sparkles,
 } from "lucide-react";
 import { PrintButton } from "@/components/print-button";
 import profile from "@/data/profile.json";
@@ -294,6 +295,24 @@ export default function CVPage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+            </section>
+
+            {/* Interests */}
+            <section>
+              <h2 className="flex items-center gap-2 text-lg font-semibold mb-4 print:mb-3">
+                <Sparkles size={18} />
+                Interests
+              </h2>
+              <div className="flex flex-wrap gap-1.5">
+                {cv.interests.map((interest) => (
+                  <span
+                    key={interest}
+                    className="px-2 py-1 text-xs border border-border rounded"
+                  >
+                    {interest}
+                  </span>
+                ))}
               </div>
             </section>
           </div>
