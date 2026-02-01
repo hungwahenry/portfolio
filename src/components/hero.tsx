@@ -1,23 +1,11 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowDown, Github, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import profile from "@/data/profile.json";
 
-const roles = ["web apps", "mobile apps", "telegram bots", "AI tools"];
-
 export function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section className="min-h-screen flex flex-col justify-center relative overflow-hidden">
       {/* Background grid */}
@@ -73,24 +61,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-2xl leading-relaxed"
+              className="text-lg md:text-xl text-muted-foreground max-w-xl border-l-2 border-foreground/20 pl-4"
             >
-              I build{" "}
-              <span className="relative inline-flex overflow-hidden h-[1.3em] align-bottom">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={roleIndex}
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -30, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="font-semibold text-foreground"
-                  >
-                    {roles[roleIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>{" "}
-              that people actually use.
+              {profile.tagline}
             </motion.p>
           </div>
 
