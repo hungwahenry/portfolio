@@ -1,174 +1,182 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Github, Store } from "lucide-react";
 import projectsData from "@/data/projects.json";
 import profile from "@/data/profile.json";
+import { SectionHeading } from "@/components/section-heading";
 
 interface Project {
   title: string;
+  tagline?: string;
   description: string;
   tags: string[];
-  github: string;
-  live?: string;
+  platforms?: string[];
+  status?: string;
   featured: boolean;
   stars?: number;
+  links?: {
+    live?: string;
+    github?: string;
+    business?: string;
+  };
+}
+
+function StatusBadge({ status }: { status?: string }) {
+  if (!status) return null;
+  const live = status === "Live";
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground">
+      {live && (
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+      )}
+      {status}
+    </span>
+  );
 }
 
 export function Projects() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const projects = projectsData as Project[];
-  const featuredProjects = projects.filter((p) => p.featured);
-  const otherProjects = projects.filter((p) => !p.featured);
+  const projects = projectsData as unknown as Project[];
+  const featured = projects.filter((p) => p.featured);
+  const others = projects.filter((p) => !p.featured);
 
   return (
-    <section id="projects" className="py-32 relative">
-      <div className="max-w-6xl mx-auto px-6">
-        <div ref={ref}>
-          {/* Section header */}
-          <div className="grid md:grid-cols-2 gap-16 items-start mb-20">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="text-sm font-mono text-muted-foreground uppercase tracking-widest">
-                03 / Projects
-              </span>
-            </motion.div>
+    <section id="projects" className="py-[var(--spacing-section)]">
+      <div className="container-page">
+        <SectionHeading
+          index="03"
+          label="Projects"
+          title="Selected work."
+          description="Products I've designed and shipped, plus a few open-source tools."
+        />
 
-            <motion.div
+        {/* Featured */}
+        <div className="space-y-5">
+          {featured.map((project, index) => (
+            <motion.article
+              key={project.title}
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              className="rounded-2xl border border-border bg-card p-7 transition-colors hover:border-border-strong md:p-9"
             >
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-                Selected work from my portfolio.
-              </h2>
-            </motion.div>
-          </div>
+              <div className="flex flex-wrap items-center gap-3">
+                <h3 className="text-xl font-semibold tracking-tight">
+                  {project.title}
+                </h3>
+                <StatusBadge status={project.status} />
+                {project.platforms && (
+                  <span className="text-xs text-muted">
+                    {project.platforms.join(" · ")}
+                  </span>
+                )}
+              </div>
 
-          {/* Featured projects */}
-          <div className="space-y-8 mb-20">
-            {featuredProjects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="group relative"
-              >
-                <div className="p-8 md:p-10 bg-card border border-border rounded-2xl hover:border-foreground/20 transition-all duration-300">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-                    <div className="space-y-4 flex-1">
-                      <div className="flex items-center gap-3">
-                        <h3 className="text-2xl font-semibold">
-                          {project.title}
-                        </h3>
-                        {project.stars && (
-                          <span className="px-2 py-0.5 text-xs bg-accent rounded-full">
-                            {project.stars} stars
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-3 py-1 text-xs font-mono bg-accent text-accent-foreground rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+              {project.tagline && (
+                <p className="mt-2 text-base text-foreground/90">
+                  {project.tagline}
+                </p>
+              )}
 
-                    <div className="flex items-center gap-3">
-                      {project.github && (
-                        <motion.a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 border border-border rounded-full hover:bg-accent transition-colors"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          aria-label="View on GitHub"
-                        >
-                          <Github size={20} />
-                        </motion.a>
-                      )}
-                      {project.live && (
-                        <motion.a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 bg-foreground text-background rounded-full hover:opacity-90 transition-opacity"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          aria-label="View live site"
-                        >
-                          <ArrowUpRight size={20} />
-                        </motion.a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                {project.description}
+              </p>
 
-          {/* Other projects grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
-            <h3 className="text-xl font-semibold mb-8">Other Projects</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {otherProjects.map((project, index) => (
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-accent px-2.5 py-1 font-mono text-xs text-accent-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                {project.links?.live && (
+                  <a
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
+                  >
+                    Visit site
+                    <ArrowUpRight
+                      size={15}
+                      className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </a>
+                )}
+                {project.links?.business && (
+                  <a
+                    href={project.links.business}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
+                  >
+                    <Store size={15} />
+                    For Business
+                  </a>
+                )}
+                {project.links?.github && (
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
+                  >
+                    <Github size={15} />
+                    Code
+                  </a>
+                )}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        {/* Other projects */}
+        {others.length > 0 && (
+          <>
+            <h3 className="eyebrow mb-6 mt-16">Also building</h3>
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+              {others.map((project, index) => (
                 <motion.a
                   key={project.title}
-                  href={project.github}
+                  href={project.links?.github || project.links?.live || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                  className="group p-6 bg-card border border-border rounded-xl hover:border-foreground/20 transition-all duration-300"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: (index % 3) * 0.06 }}
+                  className="group bg-background p-6 transition-colors hover:bg-card"
                 >
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="mb-4 flex items-center justify-between">
                     <Github
-                      size={24}
-                      className="text-muted-foreground group-hover:text-foreground transition-colors"
+                      size={20}
+                      className="text-muted-foreground transition-colors group-hover:text-foreground"
                     />
-                    <ExternalLink
-                      size={18}
-                      className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+                    <ArrowUpRight
+                      size={16}
+                      className="text-muted opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
                     />
                   </div>
-                  <h4 className="text-lg font-semibold mb-2 group-hover:text-foreground transition-colors">
+                  <h4 className="flex items-center gap-2 font-medium">
                     {project.title}
-                    {project.stars && (
-                      <span className="ml-2 text-xs font-normal text-muted-foreground">
-                        {project.stars} stars
+                    {project.stars ? (
+                      <span className="text-xs font-normal text-muted">
+                        ★ {project.stars}
                       </span>
-                    )}
+                    ) : null}
                   </h4>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                    {project.description}
+                  <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+                    {project.tagline || project.description}
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="mt-3 flex flex-wrap gap-1.5">
                     {project.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 text-xs font-mono text-muted-foreground"
-                      >
+                      <span key={tag} className="font-mono text-xs text-muted">
                         {tag}
                       </span>
                     ))}
@@ -176,25 +184,19 @@ export function Projects() {
                 </motion.a>
               ))}
             </div>
-          </motion.div>
+          </>
+        )}
 
-          {/* View all link */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-12"
+        <div className="mt-12 text-center">
+          <a
+            href={`${profile.social.github}?tab=repositories`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <a
-              href={`${profile.social.github}?tab=repositories`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              View all projects on GitHub
-              <ArrowUpRight size={16} />
-            </a>
-          </motion.div>
+            View all repositories on GitHub
+            <ArrowUpRight size={15} />
+          </a>
         </div>
       </div>
     </section>

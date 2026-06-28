@@ -3,15 +3,15 @@
   "shortName": "henry",
   "avatar": "/avatar.jpg",
   "title": "Full-Stack Developer",
-  "tagline": "Full-stack developer building web apps, mobile apps, bots, and AI tools.",
+  "tagline": "I design and build products end to end — mobile apps, web platforms, and developer tools.",
   "location": "Nigeria",
   "status": "Available for work",
-  "bio": "I'm a developer who enjoys turning complex problems into simple, elegant solutions. With expertise spanning multiple languages and frameworks, I build everything from web applications to AI-powered tools.",
-  "bioExtended": "When I'm not coding, you'll find me exploring new technologies, contributing to open source, or helping other developers level up their skills.",
+  "bio": "I'm a full-stack developer who likes shipping real products. I've taken apps from idea to the App Store and Play Store, built two-sided platforms, and released open-source developer tools — turning complex problems into simple, well-made software.",
+  "bioExtended": "I work across the stack: mobile, web, backend, and the AI and automation layers in between. When I'm not building my own products, I'm exploring new tech and contributing to open source.",
   "stats": [
-    { "value": "26+", "label": "Projects Completed" },
-    { "value": "4+", "label": "Languages Mastered" },
-    { "value": "3+", "label": "Years Experience" }
+    { "value": "3", "label": "Live Products" },
+    { "value": "20+", "label": "Projects Built" },
+    { "value": "3+", "label": "Years Building" }
   ],
   "social": {
     "github": "https://github.com/hungwahenry",

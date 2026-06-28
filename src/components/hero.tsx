@@ -1,131 +1,100 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import Image from "next/image";
 import profile from "@/data/profile.json";
 
+const fade = {
+  hidden: { opacity: 0, y: 16 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as const },
+  }),
+};
+
 export function Hero() {
   return (
-    <section className="min-h-screen flex flex-col justify-center relative overflow-hidden">
-      {/* Background grid */}
-      <div className="absolute inset-0 grid-pattern opacity-50" />
-
-      {/* Gradient orb */}
-      <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-neutral-200 to-transparent dark:from-neutral-800 rounded-full blur-3xl opacity-50" />
-
-      <div className="max-w-6xl mx-auto px-6 py-32 relative z-10">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-8"
-        >
-          {/* Status badge */}
+    <section className="relative flex min-h-svh items-center">
+      <div className="container-page py-32">
+        <div className="max-w-3xl">
+          {/* Avatar + role */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="flex items-center gap-2 text-sm text-muted-foreground"
+            custom={0}
+            variants={fade}
+            initial="hidden"
+            animate="show"
+            className="mb-7 flex items-center gap-3"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-            </span>
-            {profile.status}
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-border-strong">
+              <Image
+                src={profile.avatar}
+                alt={profile.name}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            <span className="text-sm text-muted-foreground">{profile.title}</span>
           </motion.div>
 
-          {/* Main heading */}
-          <div className="space-y-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="flex items-center gap-4 md:gap-6"
-            >
-              <div className="relative w-14 h-14 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 border-border shrink-0">
-                <Image
-                  src={profile.avatar}
-                  alt={profile.name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight">
-                {profile.name}
-              </h1>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-lg md:text-xl text-muted-foreground"
-            >
-              {profile.tagline}
-            </motion.p>
-          </div>
-
-          {/* Location */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="flex items-center gap-2 text-muted-foreground"
+          {/* Name */}
+          <motion.h1
+            custom={1}
+            variants={fade}
+            initial="hidden"
+            animate="show"
+            className="text-balance text-6xl font-semibold leading-[1.02] tracking-tight sm:text-7xl md:text-8xl"
           >
-            <MapPin size={16} />
-            <span>{profile.location}</span>
-          </motion.div>
+            {profile.name}
+          </motion.h1>
 
-          {/* CTA buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-wrap gap-4 pt-4"
+          <motion.p
+            custom={2}
+            variants={fade}
+            initial="hidden"
+            animate="show"
+            className="mt-7 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl"
           >
-            <motion.a
+            {profile.tagline}
+          </motion.p>
+
+          {/* Actions */}
+          <motion.div
+            custom={3}
+            variants={fade}
+            initial="hidden"
+            animate="show"
+            className="mt-10 flex flex-wrap items-center gap-3"
+          >
+            <a
+              href="#projects"
+              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+            >
+              View my work
+              <ArrowRight
+                size={16}
+                className="transition-transform group-hover:translate-x-0.5"
+              />
+            </a>
+            <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full font-medium hover:opacity-90 transition-opacity"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-accent"
             >
-              <Mail size={18} />
               Get in touch
-            </motion.a>
-
-            <motion.a
+            </a>
+            <a
               href={profile.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-full font-medium hover:bg-accent transition-colors"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              aria-label="GitHub"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
             >
               <Github size={18} />
-              View GitHub
-            </motion.a>
+            </a>
           </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        >
-          <motion.a
-            href="#about"
-            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
-            <ArrowDown size={16} />
-          </motion.a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

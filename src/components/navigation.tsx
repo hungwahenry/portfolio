@@ -12,98 +12,81 @@ export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
           isScrolled
-            ? "bg-background/80 backdrop-blur-md border-b"
-            : "bg-transparent"
+            ? "border-b border-border bg-background/80 backdrop-blur-md"
+            : "border-b border-transparent"
         )}
       >
-        <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <motion.a
-            href="#"
-            className="text-xl font-semibold tracking-tight"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {profile.shortName}<span className="text-muted">.</span>
-          </motion.a>
+        <nav className="container-page flex h-16 items-center justify-between">
+          <a href="#" className="text-base font-semibold tracking-tight">
+            {profile.shortName}
+            <span className="text-muted">.</span>
+          </a>
 
-          {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-8">
-            {navItems.map((item, index) => (
-              <motion.li
-                key={item.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-              >
+          {/* Desktop */}
+          <ul className="hidden items-center gap-7 md:flex">
+            {navItems.map((item) => (
+              <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {item.name}
                 </a>
-              </motion.li>
+              </li>
             ))}
-            <motion.li
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-            >
+            <li>
               <a
                 href={profile.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm px-4 py-2 bg-foreground text-background rounded-full hover:opacity-90 transition-opacity"
+                className="rounded-full bg-foreground px-4 py-1.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
               >
                 GitHub
               </a>
-            </motion.li>
+            </li>
           </ul>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 -mr-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="-mr-2 p-2 md:hidden"
+            onClick={() => setIsMobileMenuOpen((v) => !v)}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </nav>
-      </motion.header>
+      </header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-background pt-20 md:hidden"
+            className="fixed inset-0 z-40 bg-background pt-16 md:hidden"
           >
-            <nav className="px-6 py-8">
-              <ul className="space-y-6">
+            <nav className="container-page py-10">
+              <ul className="space-y-5">
                 {navItems.map((item, index) => (
                   <motion.li
                     key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.06 }}
                   >
                     <a
                       href={item.href}
@@ -115,15 +98,16 @@ export function Navigation() {
                   </motion.li>
                 ))}
                 <motion.li
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
+                  transition={{ delay: navItems.length * 0.06 }}
                 >
                   <a
                     href={profile.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block text-lg px-6 py-3 bg-foreground text-background rounded-full"
+                    className="inline-block rounded-full bg-foreground px-6 py-3 text-lg text-background"
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     GitHub
                   </a>
